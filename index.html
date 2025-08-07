@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Since We Stay Together</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 5vw;
+      color: #444;
+      margin-bottom: 40px;
+    }
+
+    .countdown {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .time-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 60px;
+      flex: 1 0 auto;
+    }
+
+    .number {
+      font-size: 6.5vw;
+      font-weight: bold;
+      color: #333;
+      line-height: 1.1;
+    }
+
+    .label {
+      font-size: 2.6vw;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    canvas#confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .number {
+        font-size: 2.5rem;
+      }
+
+      .label {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <h1>Since We Stay Together</h1>
+
+  <div class="countdown">
+    <div class="time-box">
+      <div class="number" id="years">0</div>
+      <div class="label">YEARS</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="months">0</div>
+      <div class="label">MONTHS</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="days">0</div>
+      <div class="label">DAYS</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="hours">0</div>
+      <div class="label">HOURS</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="minutes">0</div>
+      <div class="label">MINUTES</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="seconds">0</div>
+      <div class="label">SECONDS</div>
+    </div>
+  </div>
+
+  <script>
+    const startDate = new Date("August 14, 2024 17:50:00");
+
+    function updateTimer() {
+      const now = new Date();
+      let diff = now - startDate;
+
+      if (diff < 0) {
+        document.getElementById("timer").innerText = "Not started yet.";
+        return;
+      }
+
+      const second = 1000;
+      const minute = second * 60;
+      const hour = minute * 60;
+      const day = hour * 24;
+      const month = day * 30.44;
+      const year = day * 365.25;
+
+      const years = Math.floor(diff / year);
+      diff %= year;
+
+      const months = Math.floor(diff / month);
+      diff %= month;
+
+      const days = Math.floor(diff / day);
+      diff %= day;
+
+      const hours = Math.floor(diff / hour);
+      diff %= hour;
+
+      const minutes = Math.floor(diff / minute);
+      diff %= minute;
+
+      const seconds = Math.floor(diff / second);
+
+      document.getElementById("years").innerText = years;
+      document.getElementById("months").innerText = months;
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  </script>
+
+  <!-- Confetti animation -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const confettiCanvas = document.getElementById('confetti-canvas');
+    const confetti = window.confetti.create(confettiCanvas, { resize: true });
+
+    function shootConfetti() {
+      confetti({
+        particleCount: 2,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    setInterval(shootConfetti, 300);
+  </script>
+
+</body>
+</html>
